@@ -96,8 +96,30 @@ function loginUser(req, res){
 
 }
 
+function updateUser(req, res){
+    var userId = req.params.id;
+    var update = req.body;
+
+    User.findByIdAndUpdate(userId, update, (err, userUpdated) => {
+        if(err){
+            res.status(500).send({message: 'Error al actualizar el usuario'});
+        } else {
+            if(!userUpdated){
+                res.status(404).send({message: 'Error al actualizar el usuario. El usuario no existe.'});
+            } else {
+                res.status(200).send({user: userUpdated})
+            }
+
+        }
+    });
+
+
+};
+
+
 module.exports = {
     pruebas,
     saveUser,
-    loginUser
+    loginUser,
+    updateUser
 };
