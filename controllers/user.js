@@ -116,10 +116,31 @@ function updateUser(req, res){
 
 };
 
+function uploadImage(req, res){
+    var userId = req.params.id;
+    var file_name = 'No subido...'; //Nombre del fichero a subir
+
+    if(req.files){
+        var file_path = req.files.image.path;
+        var file_split = file_path.split('/');
+        var file_name = file_split[2]; // extraigo el nombre
+
+        var ext_split = file_name.split('.');
+        var file_ext = ext_split[1]; // extraigo la extensión
+
+        console.log(file_path);
+        console.log(file_split);
+        console.log(file_name);
+    } else {
+        res.status(200).send({message: 'No se ha subido ninguna imagen.'});
+    }
+
+}
 
 module.exports = {
     pruebas,
     saveUser,
     loginUser,
-    updateUser
+    updateUser,
+    uploadImage
 };
